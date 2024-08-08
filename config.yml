@@ -1,0 +1,21 @@
+Fly:
+ fly-usage: 'Usage: /fly or /fly <username>'
+ fly-permission: '&cYou do not have permission!'
+ fly-unknown-player: '&cWrong player name or player is not online.'
+ fly-canfly: '&eNow you can fly!'
+ fly-cantfly: '&eNow you can not fly!'
+ fly-second-player: '&eSuccessfuly set fly to %player%'
+ fly-second-player-canfly: '&eYou can fly!'
+ fly-second-player-cantfly: '&eYou can not fly anymore!'
+Flyspeed:
+ flyspeed-usage: 'Usage: /flyspeed <speed> or /fly <username> <speed>'
+ flyspeed-permission: '&cYou do not have permission'
+ flyspeed-unknown-player: '&cWrong player name or player is not online.'
+ flyspeed-value: '&cFly speed must be between -10 and 10.'
+ flyspeed-successfuly: '&eSuccessfuly set your fly speed to %speed%'
+ flyspeed-secondp-successfuly: '&eSuccessfuly set %player%s fly speed to %speed%'
+ flyspeed-set-successfuly: '&eYour fly speed set to %speed% by %player%'
+Lfly:
+ lfly-permission: '&cYou do not have permission!'
+ lfly-usage: 'Usage: /lfly'
+ lfly-list: '&eAllowed fly on player(s): %list%'

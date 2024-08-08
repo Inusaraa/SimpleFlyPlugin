@@ -1,0 +1,14 @@
+name: denemeplugin
+version: 1.0
+main: org.inusara.Main
+api-version: '1.20.6'
+commands:
+    fly:
+        description: "Enables or disables fly on players."
+    flyspeed:
+        description: "Changes fly speed."
+    lfly:
+        description: "Show list of can fly"
+permissions:
+    Fly.permission:
+        default: Op
