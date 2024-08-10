@@ -1,5 +1,6 @@
-name: denemeplugin
-version: 1.0
+name: FlyPlugin
+version: 1.1
+author: Inusara
 main: org.inusara.Main
 api-version: '1.20.6'
 commands:
@@ -8,7 +9,7 @@ commands:
     flyspeed:
         description: "Changes fly speed."
     lfly:
-        description: "Show list of can fly"
+        description: "Shows list of able to fly."
 permissions:
     Fly.permission:
         default: Op

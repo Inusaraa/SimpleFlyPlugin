@@ -1,7 +1,5 @@
 package org.inusara;
 
-import java.util.ArrayList;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,12 +9,12 @@ import org.bukkit.entity.Player;
 
 @SuppressWarnings("deprecation")
 public class Command implements CommandExecutor {
-	
-	public static ArrayList<UUID> listU = new ArrayList<>();
-	public static ArrayList<String> listN = new ArrayList<>();
+
+	private PlayerData playerData;
 	
 	@Override
-	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {																																	
+	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {	
+		this.playerData = new PlayerData(Main.getInstance());																																
 		if(command.getName().equalsIgnoreCase("fly")) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(ChatColor.RED + "You are not player!");
@@ -39,24 +37,24 @@ public class Command implements CommandExecutor {
 						player2.setFlying(true);
 						player2.setFlySpeed(player2.getFlySpeed());
 						player.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-second-player").replace("%player%", player2.getName()).replaceAll("&", "§"));
-						player2.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-second-player-canfly").replaceAll("&", "§"));      
-						listU.add(player2.getUniqueId());
-						listN.add(player2.getName());
+						player2.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-second-player-canfly").replaceAll("&", "§"));   
+						playerData.setPlayer(player2, true);
+						playerData.save();
 					} else {
 						player2.setAllowFlight(false);
 						player2.setFlying(false);
 						player.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-second-player").replace("%player%", player2.getName()).replaceAll("&", "§"));
 						player2.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-second-player-cantfly").replaceAll("&", "§"));
-						listU.remove(player2.getUniqueId());
-						listN.remove(player2.getName());
+						playerData.setPlayer(player2, false);
+						playerData.save();
 					}
 				} else if(args.length == 0) {
 					player.setAllowFlight(true);
 					player.setFlying(true);
 					player.setFlySpeed(player.getFlySpeed());
 					player.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-canfly").replaceAll("&", "§"));
-					listU.add(player.getUniqueId());
-					listN.add(player.getName());
+					playerData.setPlayer(player, true);
+					playerData.save();
 				} else {
 					player.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-usage").replaceAll("&", "§"));
 				}
@@ -64,8 +62,8 @@ public class Command implements CommandExecutor {
 				player.setAllowFlight(false);
 				player.setFlying(false);
 				player.sendMessage(Main.getInstance().getConfig().getString("Fly.fly-cantfly").replaceAll("&", "§"));
-				listU.remove(player.getUniqueId());
-				listN.remove(player.getName());
+				playerData.setPlayer(player, false);
+				playerData.save();
 			}
 		}
 		if(command.getName().equalsIgnoreCase("flyspeed")) {
@@ -119,12 +117,11 @@ public class Command implements CommandExecutor {
 				sender.sendMessage(Main.getInstance().getConfig().getString("Lfly.lfly-permission").replaceAll("&", "§"));
 				return false;
 			}
-			if(args.length != 0) { //May not actually be necessary
+			if(args.length != 0) {
 				sender.sendMessage(Main.getInstance().getConfig().getString("Lfly.lfly-usage").replaceAll("&", "§"));
 				return false;
 			}
-			String listString = String.join(", ", listN);
-			sender.sendMessage(Main.getInstance().getConfig().getString("Lfly.lfly-list").replace("%list%", listString).replaceAll("&", "§"));
+			sender.sendMessage(Main.getInstance().getConfig().getString("Lfly.lfly-list").replace("%list%", playerData.getList()).replaceAll("&", "§"));
 		}
 		return true;
 	}
